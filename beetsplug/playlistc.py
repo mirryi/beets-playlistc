@@ -73,13 +73,13 @@ class PlaylistcCommand(Subcommand):
         create_parser = subparsers.add_parser('create')
         create_parser.set_defaults(func=self.create)
         create_parser.add_argument('name', metavar='NAME')
-        create_parser.add_argument('query', metavar='QUERY')
+        create_parser.add_argument('query', metavar='QUERY', nargs='*')
 
         super(PlaylistcCommand, self).__init__(
             self.name, parser, self.help, aliases=self.aliases)
 
     def create(self, lib, opts):
-        self.plugin.create(lib, opts.name, opts.query)
+        self.plugin.create(lib, opts.name, ' '.join(opts.query))
 
     def func(self, lib, opts, _):
         opts.func(lib, opts)
