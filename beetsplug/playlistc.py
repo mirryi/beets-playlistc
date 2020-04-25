@@ -40,14 +40,14 @@ class PlaylistcPlugin(BeetsPlugin):
         # Map items to their paths
         items = lib.items(query, sort)
         item_path: Callable[Item, str] = lambda item: path.relpath(
-            item.path, self.relative_to()).decode("utf-8")
+            item.path, self.relative_to()).decode('utf-8')
         paths: List[str] = map(item_path, items)
 
         playlist_dir = self.playlist_dir()
         if playlist_dir is None:
             return
         filename = path.join(self.playlist_dir(),
-                             bytestring_path(name + ".m3u"))
+                             bytestring_path(name + '.m3u'))
         file = open(filename, 'w+')
 
         write_str = '\n'.join(paths)
