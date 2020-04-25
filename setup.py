@@ -18,8 +18,8 @@ setup(
     author_email="pypa-dev@googlegroups.com",  # Optional
     classifiers=[  # Optional
         "Development Status :: 4 - Beta",
-        "Environment :: Console"
-        "Topic :: Multimedia :: Sounds/Audio",
+        "Environment :: Console",
+        "Topic :: Multimedia :: Sound/Audio",
         "License :: OSI Approved :: MIT License",
     ],
     keywords="beets plugin",
