@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.7, 3.8]
+        python-version: [3.8]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -21,10 +21,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install pipenv
       - name: Build package
-        shell: pipenv shell {0}
         run: |
           pipenv sync
-          python3 setup.py sdist bdist_wheel
+          pipenv run python3 setup.py sdist bdist_wheel
       - name: Push to PyPI
         if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
         uses: pypa/gh-action-pypi-publish@master
