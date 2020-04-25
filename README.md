@@ -4,6 +4,16 @@ This [beets](https://beets.readthedocs.io/en/latest/index.html) plugin
 allows for the creation of playlists based on your beets database. Take
 advantage of beets's rich query system.
 
+## Getting Started
+
+    $ pip install beets-playlistc
+
+Enable the plugin in your beets configuration:
+
+    plugins:
+      - ...
+      - playlistc
+
 ## Usage
 
 The options `playlist_dir` and `relative_to` must be specified in
