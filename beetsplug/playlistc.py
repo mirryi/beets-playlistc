@@ -7,7 +7,7 @@ from beets.dbcore.query import ParsingError
 from beets.library import Item, Library, parse_query_string
 from beets.plugins import BeetsPlugin
 from beets.ui import Subcommand
-from beets.util import bytestring_path, normpath
+from beets.util import normpath
 
 
 class PlaylistcPlugin(BeetsPlugin):
@@ -18,15 +18,21 @@ class PlaylistcPlugin(BeetsPlugin):
         cmd = PlaylistcCommand(self)
         return [cmd]
 
-    def playlist_dir(self) -> str:
+    def config_playlist_dir(self) -> str:
         key = 'playlist_dir'
-        return normpath(self.config[key].get(str))
+        return normpath(self.config[key].get(str)).decode('utf-8')
 
-    def relative_to(self) -> str:
+    def config_relative_to(self) -> str:
         key = 'relative_to'
-        return normpath(self.config[key].get(str))
+        return normpath(self.config[key].get(str)).decode('utf-8')
 
-    def create(self, lib: Library, name: str, qs: str):
+    def create(self, lib: Library, name: str, qs: str,
+               playlist_dir: str, relative_to: str):
+        if playlist_dir is None:
+            playlist_dir = self.config_playlist_dir()
+        if relative_to is None:
+            relative_to = self.config_relative_to()
+
         # Try to parse the query
         try:
             if qs is None:
@@ -40,18 +46,13 @@ class PlaylistcPlugin(BeetsPlugin):
         # Map items to their paths
         items = lib.items(query, sort)
         item_path: Callable[Item, str] = lambda item: path.relpath(
-            item.path, self.relative_to()).decode('utf-8')
+            item.path.decode('utf-8'), relative_to)
         paths: List[str] = map(item_path, items)
 
-        playlist_dir = self.playlist_dir()
-        if playlist_dir is None:
-            return
-        filename = path.join(self.playlist_dir(),
-                             bytestring_path(name + '.m3u'))
+        filename = path.join(playlist_dir, name + '.m3u')
         file = open(filename, 'w+')
 
         write_str = '\n'.join(paths)
-
         file.write(write_str)
         file.close()
 
@@ -72,6 +73,10 @@ class PlaylistcCommand(Subcommand):
 
         create_parser = subparsers.add_parser('create')
         create_parser.set_defaults(func=self.create)
+        create_parser.add_argument(
+            '--playlist-dir', dest='playlist_dir', metavar='PATH')
+        create_parser.add_argument(
+            '--relative-to', dest='relative_to', metavar='PATH')
         create_parser.add_argument('name', metavar='NAME')
         create_parser.add_argument('query', metavar='QUERY', nargs='*')
 
@@ -79,7 +84,8 @@ class PlaylistcCommand(Subcommand):
             self.name, parser, self.help, aliases=self.aliases)
 
     def create(self, lib, opts):
-        self.plugin.create(lib, opts.name, ' '.join(opts.query))
+        self.plugin.create(lib, opts.name, ' '.join(
+            opts.query), opts.playlist_dir, opts.relative_to)
 
     def func(self, lib, opts, _):
         opts.func(lib, opts)
