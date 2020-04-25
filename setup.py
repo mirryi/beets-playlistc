@@ -10,6 +10,7 @@ setup(
     name="beets-playlistc",
     version="0.1.1",
     description="A beets plugin to create playlists from query strings",
+    license="MIT",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/Dophin2009/beets-playlistc",
@@ -17,6 +18,7 @@ setup(
     author_email="pypa-dev@googlegroups.com",  # Optional
     classifiers=[  # Optional
         "Development Status :: 4 - Beta",
+        "Environment :: Console"
         "Topic :: Multimedia :: Sounds/Audio",
         "License :: OSI Approved :: MIT License",
     ],
