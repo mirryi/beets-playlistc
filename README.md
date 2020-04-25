@@ -1,5 +1,7 @@
 # beets-playlistc
 
+![](https://github.com/Dophin2009/beets-playlistc/workflows/ci/badge.svg)
+
 This [beets](https://beets.readthedocs.io/en/latest/index.html) plugin
 allows for the creation of playlists based on your beets database. Take
 advantage of beets's rich query system.
