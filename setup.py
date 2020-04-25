@@ -8,7 +8,7 @@ with open(path.join(here, "README.md"), encoding="utf-8") as f:
 
 setup(
     name="beets-playlistc",
-    version="0.1.1",
+    version="0.1.3",
     description="A beets plugin to create playlists from query strings",
     license="MIT",
     long_description=long_description,
