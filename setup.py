@@ -15,8 +15,8 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/Dophin2009/beets-playlistc",
     author="Eric Zhao",
-    author_email="pypa-dev@googlegroups.com",  # Optional
-    classifiers=[  # Optional
+    author_email="pypa-dev@googlegroups.com",
+    classifiers=[
         "Development Status :: 4 - Beta",
         "Environment :: Console",
         "Topic :: Multimedia :: Sound/Audio",
