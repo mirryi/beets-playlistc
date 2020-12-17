@@ -45,9 +45,9 @@ class PlaylistcPlugin(BeetsPlugin):
 
         # Map items to their paths
         items = lib.items(query, sort)
-        item_path: Callable[Item, str] = lambda item: path.relpath(
+        item_path: Callable[[Item], str] = lambda item: path.relpath(
             item.path.decode('utf-8'), relative_to)
-        paths: List[str] = map(item_path, items)
+        paths = [item_path(item) for item in items]
 
         filename = path.join(playlist_dir, name + '.m3u')
         file = open(filename, 'w+')
@@ -61,8 +61,6 @@ class PlaylistcCommand(Subcommand):
     name = 'playlistc'
     aliases = ('plc',)
     help = 'create a playlist'
-
-    plugin: PlaylistcPlugin = None
 
     def __init__(self, plugin: PlaylistcPlugin):
         self.plugin = plugin

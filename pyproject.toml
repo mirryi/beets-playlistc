@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "beets-playlistc"
+version = "0.1.0"
+description = "Beets plugin to create playlists from queries"
+authors = ["Eric Zhao <21zhaoe@protonmail.com>"]
+license = "MIT"
+
+packages = [
+  { include = "beetsplug" },
+]
+
+[tool.poetry.dependencies]
+python = "^3.5"
+beets = '*'
+
+[tool.poetry.dev-dependencies]
+flake8 = '*'
+autopep8 = '*'
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
