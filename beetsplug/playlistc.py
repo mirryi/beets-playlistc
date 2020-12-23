@@ -50,11 +50,9 @@ class PlaylistcPlugin(BeetsPlugin):
         paths = [item_path(item) for item in items]
 
         filename = path.join(playlist_dir, name + '.m3u')
-        file = open(filename, 'w+')
-
-        write_str = '\n'.join(paths)
-        file.write(write_str)
-        file.close()
+        with open(filename, 'w+') as file:
+            write_str = '\n'.join(paths)
+            file.write(write_str)
 
 
 class PlaylistcCommand(Subcommand):
